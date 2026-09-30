@@ -6,8 +6,110 @@
     <title>Used Laptop Buying Guidelines | Windows 10/11 Inspection Guide</title>
     <meta name="description" content="A complete interactive Windows 10/11 used laptop inspection checklist covering CPU, RAM, SSD, battery, display, keyboard, ports, BIOS, Windows health, thermal behavior and more.">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    
+    <style>
+        /* ================= STYLE.CSS ================= */
+        :root {
+            --cream: #FFEBD6;
+            --black: #222421;
+            --burgundy: #5A0719;
+            --border-opacity: rgba(34, 36, 33, 0.2);
+        }
+
+        [data-theme="dark"] {
+            --cream: #222421;
+            --black: #FFEBD6;
+            --burgundy: #E03C5A;
+            --border-opacity: rgba(255, 235, 214, 0.2);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: var(--cream);
+            color: var(--black);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3 { color: var(--burgundy); margin-bottom: 15px; }
+        .mt-20 { margin-top: 20px; }
+
+        button {
+            font-family: inherit; cursor: pointer; border-radius: 4px;
+            padding: 10px 20px; font-weight: 600; transition: all 0.2s ease;
+        }
+        .btn-primary { background-color: var(--burgundy); color: var(--cream); border: 2px solid var(--burgundy); }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-outline { background-color: transparent; color: var(--black); border: 2px solid var(--black); }
+        .btn-outline:hover { background-color: var(--black); color: var(--cream); }
+        .btn-small { padding: 5px 10px; font-size: 0.9em; }
+        .warning-btn { border-color: var(--burgundy); color: var(--burgundy); }
+        .warning-btn:hover { background-color: var(--burgundy); color: var(--cream); }
+
+        .main-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; border-bottom: 2px solid var(--border-opacity); background: var(--cream); }
+        .logo { font-size: 1.5em; font-weight: bold; color: var(--burgundy); }
+        
+        .app-container { display: grid; grid-template-columns: 300px 1fr 300px; min-height: calc(100vh - 70px); }
+
+        .sidebar { border-right: 2px solid var(--border-opacity); padding: 20px; overflow-y: auto; max-height: calc(100vh - 70px); }
+        .progress-bar { width: 100%; height: 10px; background: var(--border-opacity); border-radius: 5px; margin: 10px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--burgundy); width: 0%; transition: width 0.3s; }
+        
+        .search-box input, .nav-filters select, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid var(--border-opacity); background: var(--cream); color: var(--black); border-radius: 4px; }
+        
+        .category-nav ul { list-style: none; }
+        .category-nav li { margin-bottom: 5px; }
+        .category-btn { width: 100%; text-align: left; background: none; border: none; padding: 8px; color: var(--black); font-weight: bold; border-bottom: 1px solid var(--border-opacity); }
+        .test-item { display: block; padding: 5px 10px 5px 20px; color: var(--black); text-decoration: none; font-size: 0.9em; cursor: pointer; }
+        .test-item:hover, .test-item.active { color: var(--burgundy); font-weight: bold; }
+
+        .main-content { padding: 30px; overflow-y: auto; }
+        .section-card { background: var(--cream); border: 1px solid var(--black); padding: 30px; border-radius: 8px; box-shadow: 4px 4px 0px var(--black); }
+        .hidden { display: none; }
+        
+        .breadcrumb { font-size: 0.9em; color: var(--black); opacity: 0.7; margin-bottom: 10px; }
+        .methods-container { display: flex; gap: 20px; margin: 20px 0; }
+        .method-box { flex: 1; border: 1px dashed var(--black); padding: 15px; border-radius: 4px; }
+        .code-container { display: flex; justify-content: space-between; align-items: center; background: var(--border-opacity); padding: 10px; border-radius: 4px; margin-top: 10px;}
+        code { font-family: monospace; word-break: break-all; }
+        
+        .status-controls { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0; }
+        .status-btn { background: transparent; border: 1px solid var(--black); color: var(--black); }
+        .status-btn.active { background: var(--black); color: var(--cream); border-color: var(--black); }
+        
+        .nav-controls { display: flex; justify-content: space-between; margin-top: 30px; border-top: 1px solid var(--border-opacity); padding-top: 20px; }
+
+        .meemo-panel { border-left: 2px solid var(--border-opacity); padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .meemo-svg-container { width: 200px; height: 200px; margin-bottom: 20px; }
+        .meemo-message-box { background: var(--black); color: var(--cream); padding: 15px; border-radius: 8px; position: relative; width: 100%; font-weight: 600; text-align: center; }
+        .meemo-message-box::before { content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); border-width: 0 10px 10px 10px; border-style: solid; border-color: transparent transparent var(--black) transparent; }
+
+        .status-expected { color: var(--black); border-left: 4px solid var(--black); padding-left: 10px; margin: 10px 0;}
+        .status-warning { color: var(--burgundy); border-left: 4px solid var(--burgundy); padding-left: 10px; margin: 10px 0;}
+
+        /* ================= RESPONSIVE.CSS ================= */
+        @media (max-width: 1024px) {
+            .app-container { grid-template-columns: 250px 1fr; }
+            .meemo-panel { grid-column: 1 / -1; border-left: none; border-top: 2px solid var(--border-opacity); flex-direction: row; justify-content: center; gap: 20px; }
+            .meemo-svg-container { width: 100px; height: 100px; margin: 0; }
+            .meemo-message-box::before { top: 50%; left: -10px; transform: translateY(-50%) rotate(-90deg); }
+        }
+        @media (max-width: 768px) {
+            .main-header { flex-direction: column; gap: 10px; text-align: center; }
+            .app-container { display: flex; flex-direction: column; }
+            .sidebar { max-height: none; border-right: none; border-bottom: 2px solid var(--border-opacity); }
+            .methods-container { flex-direction: column; }
+            .status-controls { flex-direction: column; }
+            .meemo-panel { order: -1; border-bottom: 2px solid var(--border-opacity); border-top: none; }
+        }
+        @media print {
+            .sidebar, .meemo-panel, .header-controls, .nav-controls, .status-controls { display: none !important; }
+            .app-container { display: block; }
+            .section-card { border: none; box-shadow: none; }
+        }
+    </style>
 </head>
 <body>
     <header class="main-header">
@@ -47,17 +149,17 @@
             <section id="landingSection" class="section-card active">
                 <h1 id="greetingMsg">শুভ সকাল!</h1>
                 <h2>Used Laptop কেনার আগে — দেখুন, পরীক্ষা করুন, তারপর সিদ্ধান্ত নিন।</h2>
-                <div class="safety-notice">
-                    <strong>সতর্কতা:</strong> কোনো command চালানোর আগে নির্দেশনা পড়ুন। Information-gathering command-কে অগ্রাধিকার দিন। 
+                <div class="safety-notice mt-20" style="padding:15px; border-left:4px solid var(--burgundy); background:var(--border-opacity);">
+                    <strong>সতর্কতা:</strong> কোনো command চালানোর আগে নির্দেশনা পড়ুন। Information-gathering command-কে অগ্রাধিকার দিন। Administrator command-এর ক্ষেত্রে বিশেষ সতর্ক থাকুন। কোনো system-changing command না বুঝে চালাবেন না।
                 </div>
-                <button id="startTestBtn" class="btn-primary start-btn">START TEST MY LAPTOP!</button>
-                <div class="mode-buttons">
-                    <button id="quickModeBtn" class="btn-outline">30-Min Quick Inspection</button>
-                    <button id="summaryBtn" class="btn-outline">View Final Summary</button>
+                <div class="mt-20">
+                    <button id="startTestBtn" class="btn-primary start-btn">START TEST MY LAPTOP!</button>
+                    <button id="quickModeBtn" class="btn-outline" style="margin-left: 10px;">30-Min Quick Inspection</button>
+                    <button id="summaryBtn" class="btn-outline" style="margin-left: 10px;">View Final Summary</button>
                 </div>
             </section>
 
-            <!-- Test View Area (Dynamically Populated) -->
+            <!-- Test View Area -->
             <section id="testViewSection" class="section-card hidden">
                 <div class="breadcrumb" id="breadcrumb">Category &rarr; Test</div>
                 <h2 id="testTitle">Test Title</h2>
@@ -82,12 +184,12 @@
                     <p id="testInstruction">Instruction</p>
                     <p class="status-expected"><strong>✓ স্বাভাবিক:</strong> <span id="testExpected"></span></p>
                     <p class="status-warning"><strong>⚠ সতর্ক/সমস্যা:</strong> <span id="testWarning"></span></p>
-                    <p><strong>Next Step:</strong> <span id="testNext"></span></p>
+                    <p style="margin-top:10px;"><strong>Next Step:</strong> <span id="testNext"></span></p>
                 </div>
 
-                <div class="notes-section">
-                    <label for="testNotes">My Notes (Optional):</label>
-                    <textarea id="testNotes" rows="2" placeholder="Write observation here..."></textarea>
+                <div class="notes-section mt-20">
+                    <label for="testNotes" style="font-weight:bold; display:block; margin-bottom:5px;">My Notes (Optional):</label>
+                    <textarea id="testNotes" rows="3" placeholder="Write observation here..."></textarea>
                 </div>
 
                 <div class="status-controls">
@@ -107,29 +209,481 @@
             <!-- Final Summary Section -->
             <section id="summarySection" class="section-card hidden">
                 <h2>Final Inspection Summary</h2>
-                <p>কোনো গুরুত্বপূর্ণ test অসম্পূর্ণ থাকলে সেটি আগে সম্পন্ন করুন। তারপর সংগৃহীত তথ্যের ভিত্তিতে নিজের সিদ্ধান্ত নিন।</p>
-                <div id="summaryContent"></div>
+                <p style="margin-bottom: 20px;">কোনো গুরুত্বপূর্ণ test অসম্পূর্ণ থাকলে সেটি আগে সম্পন্ন করুন। তারপর সংগৃহীত তথ্যের ভিত্তিতে নিজের সিদ্ধান্ত নিন।</p>
+                <div id="summaryContent" style="padding: 20px; background: var(--border-opacity); border-radius: 8px;"></div>
                 <button id="backToTestsBtn" class="btn-primary mt-20">Back to Tests</button>
             </section>
         </main>
 
         <!-- Meemo Assistant Panel -->
         <aside class="meemo-panel">
-            <div class="meemo-svg-container" id="meemoContainer">
-                <!-- Meemo SVG injected via JS to keep HTML clean -->
-            </div>
+            <div class="meemo-svg-container" id="meemoContainer"></div>
             <div class="meemo-message-box">
                 <p id="meemoMessage">আমি Meemo — তোমার Laptop Checking Buddy! আমি তোমাকে গাইড করব।</p>
             </div>
         </aside>
     </div>
 
-    <!-- Scripts -->
-    <script src="js/data.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/storage.js"></script>
-    <script src="js/meemo.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/app.js"></script>
+    <!-- JAVASCRIPT -->
+    <script>
+        // ================= DATA.JS =================
+        const inspectionData = [
+            {
+                category: "PART 1 — Laptop Identity & Configuration",
+                tests: [
+                    { id: 1, title: "System Information", purpose: "(এই test কেন করছি: ল্যাপটপের বেসিক মডেল এবং স্পেকস চেক করতে)", meemo: "চল, ল্যাপটপের আসল পরিচয় বের করি! মডেল কি বিক্রেতার কথার সাথে মিলছে?", gui: "Start → Search → System Information", command: "msinfo32", instruction: "System Model, Processor, এবং Installed Physical Memory চেক করুন।", expected: "মডেল ও স্পেসিফিকেশন বিক্রেতার কথার সাথে মিলেছে।", warning: "মডেল বা প্রসেসর ভিন্ন।", next: "CPU Information চেক করুন।" },
+                    { id: 2, title: "CPU Information", purpose: "(প্রসেসরের কোর এবং স্পিড যাচাই)", meemo: "প্রসেসরটি ঠিকমত কাজ করছে কিনা দেখি।", gui: "Task Manager → Performance → CPU", command: "Get-CimInstance Win32_Processor | Select-Object Name,Manufacturer,NumberOfCores", instruction: "Cores এবং Logical Processors চেক করুন।", expected: "সঠিক প্রসেসর কোর দেখাচ্ছে।", warning: "প্রসেসরের নাম ভিন্ন বা কোর সংখ্যা কম দেখাচ্ছে।", next: "CPU Load চেক করুন।" },
+                    { id: 3, title: "CPU Load/Performance", purpose: "(স্বাভাবিক অবস্থায় লোড যাচাই)", meemo: "ল্যাপটপ কি অযথাই গরম হচ্ছে বা CPU ১০০% হয়ে আছে?", gui: "Task Manager", command: "N/A", instruction: "ল্যাপটপ আইডল অবস্থায় CPU Usage দেখুন।", expected: "Idle অবস্থায় CPU Usage 1-10% এর মধ্যে আছে।", warning: "Idle অবস্থায় CPU 50%+ হয়ে আছে।", next: "GPU সেকশনে যান।" }
+                ]
+            },
+            {
+                category: "PART 2 — GPU",
+                tests: [
+                    { id: 4, title: "GPU Information", purpose: "(গ্রাফিক্স কার্ডের তথ্য যাচাই)", meemo: "Dedicated GPU থাকলে সেটা ঠিকমত ডিটেক্ট করছে কিনা দেখি।", gui: "Task Manager → Performance → GPU", command: "dxdiag", instruction: "Display ট্যাবে গিয়ে GPU মডেল ও VRAM চেক করুন।", expected: "সঠিক GPU মডেল শো করছে।", warning: "Microsoft Basic Display Adapter লেখা থাকলে ড্রাইভার বা হার্ডওয়্যার ইস্যু।", next: "Stress Test।" },
+                    { id: 5, title: "GPU Stress Test", purpose: "(লোড পড়লে স্ক্রিন ব্ল্যাক হয় কিনা)", meemo: "একটু লোড দিয়ে দেখি স্ক্রিন ফ্লিকার করে কিনা!", gui: "Run a heavy 3D app or webgl benchmark", command: "devmgmt.msc", instruction: "Device Manager এ গিয়ে Display Adapters এ হলুদ চিহ্ন (Warning) আছে কিনা দেখুন।", expected: "কোনো Error Code বা Warning নেই।", warning: "Yellow Triangle (Code 43) মানে GPU নষ্ট বা ফল্টি।", next: "RAM চেক করুন।" }
+                ]
+            },
+            {
+                category: "PART 3 — RAM",
+                tests: [
+                    { id: 6, title: "RAM Capacity/Speed", purpose: "(RAM এর স্পিড এবং ক্যাপাসিটি)", meemo: "কতো জিবি র‍্যাম আর কতো স্পিড, মিলিয়ে নাও।", gui: "Task Manager → Performance → Memory", command: "Get-CimInstance Win32_PhysicalMemory | Select-Object Capacity,Speed", instruction: "Speed (MHz) এবং Form Factor চেক করুন।", expected: "স্পিড এবং ক্যাপাসিটি সঠিক।", warning: "বলার চেয়ে কম র‍্যাম দেখাচ্ছে।", next: "RAM Error Test।" },
+                    { id: 7, title: "RAM Error Test", purpose: "(র‍্যামে কোনো ফল্ট আছে কিনা)", meemo: "RAM এ কোনো physical error থাকলে ল্যাপটপ রিস্টার্ট নিতে পারে।", gui: "Start → Windows Memory Diagnostic", command: "mdsched.exe", instruction: "Run করে Restart দিন (সময় লাগতে পারে)।", expected: "No memory errors detected.", warning: "Hardware problems detected.", next: "Upgradeability চেক।" },
+                    { id: 8, title: "RAM Upgradeability", purpose: "(ভবিষ্যতে র‍্যাম বাড়ানো যাবে কিনা)", meemo: "র‍্যাম কি সোল্ডার করা নাকি স্লট খালি আছে?", gui: "Task Manager → Memory", command: "wmic memphysical get MaxCapacity", instruction: "Slots used: 1 of 2 লেখা আছে কিনা দেখুন।", expected: "খালি স্লট আছে বা পরিবর্তনযোগ্য।", warning: "Soldered RAM এবং ফুল ক্যাপাসিটি ব্যবহার করা (আপগ্রেড অসম্ভব)।", next: "Storage চেক করুন।" }
+                ]
+            },
+            {
+                category: "PART 4 — SSD/HDD",
+                tests: [
+                    { id: 9, title: "Storage Information", purpose: "(স্টোরেজের ধরন ও সাইজ)", meemo: "HDD নাকি SSD এবং কতো জিবি?", gui: "Task Manager → Disk", command: "Get-PhysicalDisk | Format-Table FriendlyName,MediaType,Size", instruction: "MediaType (SSD/HDD) এবং Size দেখুন।", expected: "বিক্রেতার বলা সাইজ ও টাইপ মিলেছে।", warning: "SSD এর বদলে HDD বা সাইজ কম।", next: "Physical Disk Health।" },
+                    { id: 10, title: "Physical Disk Health", purpose: "(ডিস্কের সাধারণ স্বাস্থ্য)", meemo: "ডিস্ক ঠিক আছে তো?", gui: "Disk Management", command: "Get-Disk | Format-Table HealthStatus", instruction: "Health Status দেখুন।", expected: "Healthy.", warning: "Unhealthy বা Warning.", next: "SMART চেক।" },
+                    { id: 11, title: "SSD/HDD SMART", purpose: "(গভীর হার্ডওয়্যার লেভেল চেক)", meemo: "CrystalDiskInfo (3rd party) দিয়ে চেক করা ভালো, তবে উইন্ডোজ থেকেও বেসিক দেখা যায়।", gui: "Command Prompt (Admin)", command: "wmic diskdrive get status", instruction: "Status চেক করুন।", expected: "OK", warning: "Pred Fail বা Bad", next: "SSD Speed।" },
+                    { id: 12, title: "SSD Speed", purpose: "(রিড/রাইট স্পিড ঠিক আছে কিনা)", meemo: "ফাইল কপি হতে কেমন সময় লাগে?", gui: "Task Manager", command: "winsat disk -drive c", instruction: "Disk Sequential Read স্পিড দেখুন।", expected: "স্বাভাবিক স্পিড (SSD এর ক্ষেত্রে 400MB/s+)।", warning: "খুবই ধীরগতি বা ফ্রিজ হয়ে যাওয়া।", next: "Display চেক।" }
+                ]
+            },
+            {
+                category: "PART 5 — Display",
+                tests: [
+                    { id: 13, title: "Resolution/Refresh Rate", purpose: "(স্ক্রিনের কোয়ালিটি)", meemo: "Full HD নাকি 4K? 60Hz নাকি 120Hz?", gui: "Settings → System → Display → Advanced display", command: "N/A", instruction: "Resolution ও Refresh Rate মিলিয়ে নিন।", expected: "সঠিক রেজোলিউশন দেখাচ্ছে।", warning: "রেজোলিউশন কম বা পরিবর্তন করা যাচ্ছে না।", next: "Dead Pixel Test." },
+                    { id: 14, title: "Dead Pixel Test", purpose: "(স্ক্রিনে কোনো স্পট আছে কিনা)", meemo: "ফুলস্ক্রিন জুড়ে White, Black, Red, Green, Blue কালার দিয়ে চেক করো।", gui: "Browser (Search: Dead Pixel Test)", command: "N/A", instruction: "খুব কাছ থেকে প্রতিটি কালার স্ক্রিনে দেখুন।", expected: "কোনো কালো বা রঙিন বিন্দু/দাগ নেই।", warning: "সাদা স্পট (Pressure mark) বা ডেড পিক্সেল আছে।", next: "Screen Angle Test." },
+                    { id: 15, title: "Screen Angle Test", purpose: "(ভিউইং এঙ্গেল)", meemo: "পাশ থেকে বা উপর-নিচ থেকে দেখলে স্ক্রিন কেমন দেখায়?", gui: "Physical", command: "N/A", instruction: "ল্যাপটপের স্ক্রিন বিভিন্ন এঙ্গেলে ঘুরিয়ে দেখুন।", expected: "IPS প্যানেল হলে সব দিক থেকে ক্লিয়ার।", warning: "TN প্যানেলের কালার ওয়াশআউট হওয়া (যদিও এটি হার্ডওয়্যার ফল্ট নয়, প্যানেল টাইপ)।", next: "Brightness Test." },
+                    { id: 16, title: "Brightness Test", purpose: "(ব্যাকলাইট ঠিক আছে কিনা)", meemo: "ব্রাইটনেস কমালে-বাড়ালে কোনো সমস্যা হয় কি?", gui: "Action Center / Keyboard Keys", command: "N/A", instruction: "ব্রাইটনেস ০ থেকে ১০০% করুন।", expected: "স্মুথলি কাজ করছে, ফ্লিকারিং নেই।", warning: "ব্রাইটনেস কাজ করে না বা স্ক্রিন কাঁপে।", next: "Battery চেক।" }
+                ]
+            },
+            {
+                category: "PART 6 — Battery",
+                tests: [
+                    { id: 17, title: "Battery Report", purpose: "(ব্যাটারির আসল স্বাস্থ্য জানা)", meemo: "Design Capacity আর Full Charge Capacity তুলনা করে দেখি ব্যাটারির অবস্থা কী!", gui: "N/A", command: "powercfg /batteryreport", instruction: "কমান্ডটি রান করে C:\\ ব্যাটারি রিপোর্ট ফাইলটি ব্রাউজারে ওপেন করুন।", expected: "Full Charge Capacity, Design Capacity এর কাছাকাছি (৭০%+)।", warning: "ক্যাপাসিটি অর্ধেকের নিচে নেমে গেছে বা Cycle Count অনেক বেশি।", next: "Real Battery Test." },
+                    { id: 18, title: "Real Battery Test", purpose: "(হঠাৎ চার্জ ড্রপ হয় কিনা)", meemo: "চার্জার খুলে ৫ মিনিট ব্যবহার করে দেখো পার্সেন্টেজ লাফাচ্ছে কিনা।", gui: "Physical / Battery Icon", command: "N/A", instruction: "ব্রাইটনেস ফুল করে ইউটিউবে ভিডিও চালান।", expected: "স্বাভাবিকভাবে চার্জ কমছে।", warning: "হঠাৎ ২০% ড্রপ বা ল্যাপটপ বন্ধ হয়ে যাওয়া।", next: "Battery Swelling." },
+                    { id: 19, title: "Battery Swelling", purpose: "(ফিজিক্যাল ব্যাটারি সেফটি)", meemo: "ব্যাটারি ফুলে গেলে টাচপ্যাড বা কীবোর্ড উঁচু হয়ে যায়। এটি বিপজ্জনক!", gui: "Physical", command: "N/A", instruction: "ল্যাপটপের পাম রেস্ট বা টাচপ্যাডের চারপাশে হাত বুলিয়ে দেখুন উঁচু হয়ে আছে কিনা।", expected: "পুরোপুরি সমতল।", warning: "উঁচু হয়ে আছে (অবিলম্বে ব্যাটারি বদলাতে হবে)।", next: "Charger চেক।" }
+                ]
+            },
+            {
+                category: "PART 7 — Charger & Charging",
+                tests: [
+                    { id: 20, title: "Charger", purpose: "(অরিজিনাল চার্জার কিনা)", meemo: "চার্জারের ওয়াটেজ ল্যাপটপের সাথে ম্যাচ করে তো?", gui: "Physical", command: "N/A", instruction: "চার্জারের স্টিকারে Output Voltage (V) এবং Ampere (A) গুণ করে Wattage বের করুন।", expected: "সঠিক ওয়াটের অরিজিনাল বা ভালো মানের চার্জার।", warning: "আন্ডারপাওয়ার্ড চার্জার (ল্যাপটপ চার্জ হতে অনেক সময় নেবে)।", next: "Charging Port." },
+                    { id: 21, title: "Charging Port", purpose: "(প্লাগ লুজ কিনা)", meemo: "প্লাগ লাগানোর পর একটু নড়ালে চার্জিং ছেড়ে দেয় কিনা দেখো।", gui: "Physical", command: "N/A", instruction: "চার্জার লাগিয়ে একটু নেড়ে দেখুন।", expected: "চার্জ কন্টিনিউ হচ্ছে।", warning: "একটু নড়লেই চার্জ ডিসকানেক্ট হচ্ছে (পোর্টের সমস্যা)।", next: "Keyboard চেক।" }
+                ]
+            },
+            {
+                category: "PART 8 — Keyboard & Touchpad",
+                tests: [
+                    { id: 22, title: "Keyboard", purpose: "(সব বাটন কাজ করে কিনা)", meemo: "অনলাইন কীবোর্ড টেস্টার দিয়ে সবগুলো বাটন চাপো।", gui: "Browser (Search: Keyboard Tester)", command: "N/A", instruction: "A-Z, 0-9, Fn, Space, Enter সব চেক করুন। ব্যাকলাইট থাকলে চেক করুন।", expected: "সব বাটন রেসপন্সিভ।", warning: "কোনো বাটন কাজ করে না বা দুইবার টাইপ হয়।", next: "Touchpad." },
+                    { id: 23, title: "Touchpad", purpose: "(মাউসের কাজ)", meemo: "লেফট ক্লিক, রাইট ক্লিক এবং মাল্টি-টাচ কাজ করছে?", gui: "Physical", command: "N/A", instruction: "পুরো টাচপ্যাড জুড়ে আঙুল ঘোরান। জেসচার (২ আঙুল দিয়ে স্ক্রল) চেক করুন।", expected: "স্মুথ এবং সব ক্লিক কাজ করছে।", warning: "কার্সর লাফায় বা ক্লিক কাজ করে না।", next: "Audio/Cam." }
+                ]
+            },
+            {
+                category: "PART 9 — Audio / Microphone / Webcam",
+                tests: [
+                    { id: 24, title: "Speaker", purpose: "(সাউন্ড কোয়ালিটি)", meemo: "ফুল ভলিউমে গান বাজিয়ে দেখো সাউন্ড ফাটে কিনা।", gui: "Taskbar Sound Icon", command: "N/A", instruction: "Left এবং Right ব্যালেন্স চেক করুন।", expected: "ক্লিয়ার সাউন্ড।", warning: "ডিস্টরশন বা সাউন্ড ফাটা।", next: "Headphone Jack." },
+                    { id: 25, title: "Headphone Jack", purpose: "(অডিও পোর্ট)", meemo: "ইয়ারফোন লাগিয়ে চেক করো।", gui: "Physical", command: "N/A", instruction: "ইয়ারফোন কানেক্ট করে সাউন্ড শুনুন।", expected: "ইয়ারফোনে ক্লিয়ার সাউন্ড আসছে।", warning: "এক কানে সাউন্ড আসে বা লুজ কানেকশন।", next: "Microphone." },
+                    { id: 26, title: "Microphone", purpose: "(ভয়েস রেকর্ডিং)", meemo: "Voice Recorder ওপেন করে কথা রেকর্ড করে শোনো।", gui: "Start → Voice Recorder", command: "N/A", instruction: "রেকর্ড করে প্লেব্যাক শুনুন।", expected: "আপনার কথা ক্লিয়ার শোনা যাচ্ছে।", warning: "অনেক নয়েজ বা কিছুই রেকর্ড হয়নি।", next: "Webcam." },
+                    { id: 27, title: "Webcam", purpose: "(ক্যামেরা)", meemo: "ক্যামেরা ওপেন করে দেখো ছবি পরিষ্কার কিনা। Privacy Shutter থাকলে সরাও।", gui: "Start → Camera", command: "N/A", instruction: "ক্যামেরা অ্যাপ ওপেন করুন।", expected: "ছবি ঠিকমত দেখা যাচ্ছে।", warning: "কালো স্ক্রিন বা ফ্লিকারিং।", next: "Wi-Fi/BT." }
+                ]
+            },
+            {
+                category: "PART 10 — Wi-Fi / Bluetooth",
+                tests: [
+                    { id: 28, title: "Wi-Fi", purpose: "(ওয়্যারলেস নেটওয়ার্ক)", meemo: "ওয়াইফাই কানেক্ট করে ইন্টারনেট ব্রাউজ করো।", gui: "Taskbar Network Icon", command: "netsh wlan show interfaces", instruction: "রাউটারের সাথে কানেক্ট করে Signal চেক করুন।", expected: "স্টেবল কানেকশন।", warning: "বারবার ডিসকানেক্ট হওয়া বা নেটওয়ার্ক না পাওয়া।", next: "Network Adapter." },
+                    { id: 29, title: "Network Adapter", purpose: "(হার্ডওয়্যার আইডেন্টিটি)", meemo: "নেটওয়ার্ক কার্ডের নাম দেখি।", gui: "Device Manager", command: "ipconfig /all", instruction: "Intel/Realtek/Broadcom அடাপ্টার চেক করুন।", expected: "সঠিক অ্যাডাপ্টার।", warning: "Device Manager এ নেটওয়ার্ক অ্যাডাপ্টারে হলুদ চিহ্ন।", next: "Bluetooth." },
+                    { id: 30, title: "Bluetooth", purpose: "(ব্লুটুথ কানেকশন)", meemo: "ফোন থেকে ব্লুটুথ দিয়ে ফাইল সেন্ড করে দেখো।", gui: "Settings → Bluetooth & devices", command: "N/A", instruction: "ফোন বা ইয়ারবাডস পেয়ার করুন।", expected: "সাকসেসফুলি কানেক্ট হয়েছে।", warning: "ডিভাইস খুঁজেই পাচ্ছে না।", next: "Ports." }
+                ]
+            },
+            {
+                category: "PART 11 — Ports",
+                tests: [
+                    { id: 31, title: "USB-A / USB-C", purpose: "(পেনড্রাইভ ডিটেক্ট করে কিনা)", meemo: "ল্যাপটপের সবগুলো পোর্টে পেনড্রাইভ লাগিয়ে দেখো।", gui: "File Explorer", command: "N/A", instruction: "সব পোর্টে পেনড্রাইভ ইনসার্ট করুন।", expected: "সব পোর্ট ঠিকমত রিড করছে।", warning: "কোনো একটি পোর্ট ডেড।", next: "USB-C Capability." },
+                    { id: 32, title: "USB-C Capability", purpose: "(টাইপ-সি পোর্টের ফিচার)", meemo: "সব টাইপ-সি দিয়ে ডিসপ্লে বা চার্জিং হয় না! লোগো দেখে বোঝো।", gui: "Physical", command: "N/A", instruction: "পোর্টের পাশে Thunderbolt বা DisplayPort লোগো আছে কিনা দেখুন।", expected: "ফিচার স্পেসিফিকেশন অনুযায়ী কাজ করছে।", warning: "লুজ পোর্ট।", next: "HDMI / DisplayPort." },
+                    { id: 33, title: "HDMI / DisplayPort", purpose: "(এক্সটার্নাল ডিসপ্লে)", meemo: "সম্ভব হলে মনিটর বা টিভিতে লাগিয়ে দেখো।", gui: "Physical", command: "N/A", instruction: "কেবল কানেক্ট করুন।", expected: "এক্সটার্নাল মনিটরে স্ক্রিন শো করছে।", warning: "পোর্ট কাজ করছে না।", next: "SD Card." },
+                    { id: 34, title: "SD Card", purpose: "(মেমোরি কার্ড স্লট)", meemo: "SD কার্ড স্লট থাকলে চেক করো।", gui: "File Explorer", command: "N/A", instruction: "কার্ড লাগিয়ে রিড/রাইট চেক করুন।", expected: "রিড/রাইট হচ্ছে।", warning: "ডিটেক্ট করছে না।", next: "Ethernet/LAN." },
+                    { id: 35, title: "Ethernet/LAN", purpose: "(ল্যান ক্যাবল পোর্ট)", meemo: "RJ45 পোর্ট থাকলে কেবল লাগিয়ে দেখো ইন্টারনেট পায় কিনা।", gui: "Physical", command: "N/A", instruction: "কেবল লাগান।", expected: "লিঙ্ক লাইট ব্লিঙ্ক করছে এবং ইন্টারনেট পেয়েছে।", warning: "পোর্ট ভাঙা বা ডেড।", next: "Motherboard." }
+                ]
+            },
+            {
+                category: "PART 12 — Motherboard",
+                tests: [
+                    { id: 36, title: "Baseboard Information", purpose: "(মাদারবোর্ডের সিরিয়াল/মডেল)", meemo: "মাদারবোর্ডের অরিজিনাল মডেল যাচাই করি।", gui: "System Information", command: "Get-CimInstance Win32_BaseBoard | Select-Object Manufacturer,Product", instruction: "মডেল ও ম্যানুফ্যাকচারার চেক করুন।", expected: "সঠিক মডেল শো করছে।", warning: "ভুল বা মিসিং তথ্য।", next: "Device Manager." },
+                    { id: 37, title: "Device Manager", purpose: "(কোনো ড্রাইভার মিসিং কিনা)", meemo: "Unknown Device বা হলুদ দাগ থাকলে মাদারবোর্ডের কোনো চিপে সমস্যা থাকতে পারে।", gui: "Start → Device Manager", command: "devmgmt.msc", instruction: "সবগুলো ট্রি এক্সপান্ড করে দেখুন।", expected: "সব ড্রাইভার ইন্সটল করা আছে, কোনো এরর নেই।", warning: "হলুদ চিহ্ন বা Unknown Device (বিশেষ করে System Devices এ)।", next: "Motherboard Functional Test." },
+                    { id: 38, title: "Motherboard Functional Test", purpose: "(পেরিফেরাল কন্ট্রোলার)", meemo: "কিবোর্ড, মাউস, অডিও, ইউএসবি - সব একসাথে কাজ করছে কিনা দেখো।", gui: "Physical", command: "N/A", instruction: "সব কম্পোনেন্ট স্বাভাবিক আচরণ করছে কিনা খেয়াল করুন।", expected: "সব ঠিক।", warning: "মাঝে মাঝে পোর্ট কাজ করা বন্ধ করে দেয়।", next: "BIOS/UEFI." }
+                ]
+            },
+            {
+                category: "PART 13 — BIOS / UEFI",
+                tests: [
+                    { id: 39, title: "BIOS Access", purpose: "(বায়োসে ঢোকা যায় কিনা)", meemo: "ল্যাপটপ রিস্টার্ট দিয়ে BIOS এ ঢোকার চেষ্টা করো (F2/F10/Del/Enter)।", gui: "Restart + BIOS Key", command: "N/A", instruction: "বায়োসে অ্যাক্সেস করুন।", expected: "সফলভাবে বায়োসে ঢুকেছে।", warning: "বায়োসে ঢুকতে দিচ্ছে না।", next: "BIOS Version." },
+                    { id: 40, title: "BIOS Version", purpose: "(আপডেট স্ট্যাটাস)", meemo: "বায়োস কতো সালের আপডেট করা?", gui: "System Information", command: "Get-CimInstance Win32_BIOS | Select-Object SMBIOSBIOSVersion,ReleaseDate", instruction: "ভার্সন ও ডেট চেক করুন।", expected: "ভার্সন দেখা যাচ্ছে।", warning: "খুবই পুরনো (যদিও সমস্যা নেই, আপডেট করা লাগতে পারে)।", next: "BIOS Password." },
+                    { id: 41, title: "BIOS Password", purpose: "(লক করা কিনা)", meemo: "BIOS এ কোনো পাসওয়ার্ড চাইলে বিক্রেতাকে বলো রিমুভ করে দিতে। এটি খুব জরুরি!", gui: "BIOS Setup", command: "N/A", instruction: "বায়োসের সিকিউরিটি ট্যাবে গিয়ে দেখুন Admin/System Password সেট করা কিনা।", expected: "কোনো পাসওয়ার্ড সেট করা নেই।", warning: "পাসওয়ার্ড প্রোটেক্টেড (কখনোই পাসওয়ার্ড ছাড়া কিনবেন পরীক্ষার্থে)।", next: "Thermal." }
+                ]
+            },
+            {
+                category: "PART 14 — Cooling / Fan",
+                tests: [
+                    { id: 42, title: "Temperature Monitoring", purpose: "(ল্যাপটপ বেশি গরম হয় কিনা)", meemo: "HWiNFO বা Task Manager দিয়ে টেম্পারেচার চেক করো।", gui: "Task Manager (GPU Temp)", command: "N/A", instruction: "লোড অবস্থায় টেম্পারেচার খেয়াল করুন।", expected: "স্বাভাবিক (CPU < 90°C, GPU < 85°C লোডে)।", warning: "অত্যধিক গরম হয়ে থ্রটল করছে (100°C)।", next: "Fan." },
+                    { id: 43, title: "Fan", purpose: "(ফ্যানের শব্দ ও কার্যকারিতা)", meemo: "ফ্যান কি ঘুরছে? কোনো অদ্ভুত আওয়াজ হচ্ছে?", gui: "Physical", command: "N/A", instruction: "ভেন্ট এর কাছে কান নিয়ে শুনুন বা বাতাস বের হচ্ছে কিনা অনুভব করুন।", expected: "স্বাভাবিক আওয়াজে ফ্যান বাতাস বের করছে।", warning: "খড়খড় শব্দ বা কোনো বাতাসই বের হচ্ছে না।", next: "Physical Body." }
+                ]
+            },
+            {
+                category: "PART 15 — Physical Body",
+                tests: [
+                    { id: 44, title: "Chassis", purpose: "(বডির কন্ডিশন)", meemo: "ল্যাপটপের বডিতে বড় কোনো ডেন্ট বা ফাটল আছে কি?", gui: "Physical", command: "N/A", instruction: "পুরো বডি, কর্নার এবং তলার অংশ ভালো করে দেখুন।", expected: "সাধারণ স্ক্র্যাচ থাকতে পারে, ফাটল নেই।", warning: "বড় ডেন্ট (পড়ে যাওয়ার লক্ষণ) বা ফাটা বডি।", next: "Hinge." },
+                    { id: 45, title: "Hinge", purpose: "(স্ক্রিন খোলা-বন্ধ করা)", meemo: "ল্যাপটপ খুলতে বা বন্ধ করতে স্ক্রিন কি খুব বেশি নড়বড়ে মনে হয়?", gui: "Physical", command: "N/A", instruction: "স্ক্রিন কয়েকবার ধীরে ধীরে খুলুন ও বন্ধ করুন।", expected: "স্মুথ এবং স্টেবল।", warning: "কবজা ভাঙা বা খুব লুজ (স্ক্রিন নিজে থেকে হেলে পড়ে)।", next: "Liquid/Corrosion." },
+                    { id: 46, title: "Liquid/Corrosion", purpose: "(পানি পড়ার লক্ষণ)", meemo: "পোর্টের ভেতরে মরিচা বা আঠালো কিছু আছে কিনা দেখো।", gui: "Physical", command: "N/A", instruction: "ফ্ল্যাশলাইট দিয়ে পোর্টের ভেতরে তাকান।", expected: "পোর্ট ক্লিন।", warning: "মরিচা বা কফি/পানির দাগ (কখনোই কিনবেন না)।", next: "Windows Activation." }
+                ]
+            },
+            {
+                category: "PART 16 — Windows Activation & Security",
+                tests: [
+                    { id: 47, title: "Windows Activation", purpose: "(উইন্ডোজ জেনুইন কিনা)", meemo: "উইন্ডোজ কি অ্যাক্টিভেটেড?", gui: "Settings → System → Activation", command: "slmgr /xpr", instruction: "কমান্ড রান করে দেখুন Permanently activated কিনা।", expected: "Windows is activated.", warning: "Not activated বা Expiration date দেখাচ্ছে (KMS crack)।", next: "Windows Update." },
+                    { id: 48, title: "Windows Update", purpose: "(আপডেট কাজ করে কিনা)", meemo: "আপডেট কি কাজ করছে নাকি কেউ ব্লক করে রেখেছে?", gui: "Settings → Windows Update", command: "N/A", instruction: "Check for updates এ ক্লিক করুন।", expected: "স্বাভাবিকভাবে চেক হচ্ছে।", warning: "Error কোড দেখাচ্ছে (সিস্টেম করাপ্ট হতে পারে)।", next: "Local User Accounts." },
+                    { id: 49, title: "Local User Accounts", purpose: "(ইউজার স্ট্যাটাস)", meemo: "কয়টা ইউজার একাউন্ট আছে সিস্টেমে?", gui: "Control Panel", command: "net user", instruction: "একাউন্ট লিস্ট চেক করুন।", expected: "শুধুমাত্র কারেন্ট ইউজার বা এডমিন।", warning: "অচেনা অনেক ইউজার একাউন্ট।", next: "Administrator Accounts." },
+                    { id: 50, title: "Administrator Accounts", purpose: "(এডমিন পারমিশন)", meemo: "তুমি কি এই ল্যাপটপে এডমিন?", gui: "Settings → Accounts", command: "Get-LocalGroupMember -Group 'Administrators'", instruction: "বর্তমান ইউজার এডমিন কিনা যাচাই করুন।", expected: "বর্তমান একাউন্ট এডমিন গ্রুপে আছে।", warning: "Standard User (সিস্টেমে কোনো চেঞ্জ করতে পারবেন না)।", next: "Organization Enrollment." },
+                    { id: 51, title: "Organization Enrollment", purpose: "(ল্যাপটপটি কোনো কোম্পানির কিনা)", meemo: "ল্যাপটপটি কি কোনো অফিস/কোম্পানির MDM এ লক করা? এটি খুব গুরুত্বপূর্ণ!", gui: "Settings → Accounts → Access work or school", command: "dsregcmd /status", instruction: "Device State এ AzureAdJoined বা EnterpriseJoined 'YES' কিনা দেখুন।", expected: "NO (পার্সোনাল ডিভাইস)।", warning: "YES (কোম্পানির ল্যাপটপ, রিসেট দিলে লক হয়ে যেতে পারে)।", next: "Event Viewer." }
+                ]
+            },
+            {
+                category: "PART 17 — Event Viewer",
+                tests: [
+                    { id: 52, title: "System Error Log", purpose: "(লুকানো হার্ডওয়্যার এরর)", meemo: "Event Viewer এ দেখি ল্যাপটপটি বারবার ক্র্যাশ করে রিস্টার্ট হয়েছে কিনা।", gui: "Start → Event Viewer", command: "eventvwr.msc", instruction: "Windows Logs → System এ গিয়ে Critical (লাল আইকন) এরর খুঁজুন।", expected: "স্বাভাবিক কিছু ওয়ার্নিং থাকতে পারে, কিন্তু বারবার 'Kernel-Power' বা 'Disk' এরর নেই।", warning: "প্রচুর Disk error বা Unexpected shutdown (লুকানো হার্ডওয়্যার সমস্যা)।", next: "Cold Boot." }
+                ]
+            },
+            {
+                category: "PART 18 — Stability",
+                tests: [
+                    { id: 53, title: "Cold Boot", purpose: "(স্টার্টআপ স্পিড)", meemo: "ল্যাপটপ পুরোপুরি শাটডাউন করে আবার অন করো। কতো সময় লাগে?", gui: "Power → Shut down", command: "N/A", instruction: "অন হতে কেমন সময় নেয় দেখুন।", expected: "SSD থাকলে ১০-১৫ সেকেন্ডে অন হয়ে যায়।", warning: "২-৩ মিনিট লাগছে বা ব্ল্যাক স্ক্রিনে আটকে থাকে।", next: "Restart." },
+                    { id: 54, title: "Restart", purpose: "(রিস্টার্ট লুপ)", meemo: "রিস্টার্ট দিলে ঠিকমত অন হয় তো?", gui: "Power → Restart", command: "N/A", instruction: "রিস্টার্ট দিন।", expected: "স্বাভাবিকভাবে রিস্টার্ট নেয়।", warning: "রিস্টার্ট দিলে ব্লু স্ক্রিন (BSOD) দেয়।", next: "Sleep/Wake." },
+                    { id: 55, title: "Sleep/Wake", purpose: "(স্লিপ থেকে ওঠা)", meemo: "ল্যাপটপের ঢাকনা বন্ধ করে স্লিপে পাঠাও, তারপর খুলে দেখো অন হয় কিনা।", gui: "Close Lid", command: "N/A", instruction: "স্লিপ থেকে জেগে ওঠার পর ওয়াইফাই, অডিও, টাচপ্যাড কাজ করে কিনা চেক করুন।", expected: "সাথে সাথেই অন হয় এবং সব কাজ করে।", warning: "স্লিপ থেকে আর অন হয় না (ফোর্স রিস্টার্ট দিতে হয়)।", next: "Energy Report." }
+                ]
+            },
+            {
+                category: "PART 19 — Power Diagnostics",
+                tests: [
+                    { id: 56, title: "Energy Report", purpose: "(পাওয়ার ইস্যু আইডেন্টিফাই)", meemo: "পাওয়ার এফিশিয়েন্সি কেমন সেটা এনালাইজ করি।", gui: "N/A", command: "powercfg /energy", instruction: "কমান্ড রান করে (৬০ সেকেন্ড লাগবে) C:\\ energy-report.html ফাইল চেক করুন।", expected: "রিপোর্ট জেনারেট হয়েছে।", warning: "Critical battery or power failures reported.", next: "Supported Sleep States." },
+                    { id: 57, title: "Supported Sleep States", purpose: "(স্লিপ মোড সাপোর্ট)", meemo: "মডার্ন স্ট্যান্ডবাই সাপোর্ট করে কিনা?", gui: "N/A", command: "powercfg /a", instruction: "কী কী স্লিপ স্টেট এভেইলেবল দেখুন।", expected: "Standby (S3) বা Modern Standby Supported.", warning: "System firmware does not support sleep states.", next: "CPU Inventory." }
+                ]
+            },
+            {
+                category: "PART 20 — Hardware Inventory",
+                tests: [
+                    { id: 58, title: "CPU Inventory", purpose: "(অফিসিয়াল ইনভেন্টরি চেক)", meemo: "PowerShell দিয়ে কনফার্ম হয়ে নিই।", gui: "N/A", command: "Get-CimInstance Win32_Processor | Select-Object Name,Manufacturer", instruction: "ডাটা চেক করুন।", expected: "সঠিক প্রসেসর।", warning: "ভুল প্রসেসর।", next: "RAM Inventory." },
+                    { id: 59, title: "RAM Inventory", purpose: "(পার্ট নাম্বার যাচাই)", meemo: "র‍্যামের আসল পার্ট নাম্বার কী?", gui: "N/A", command: "Get-CimInstance Win32_PhysicalMemory | Select-Object Manufacturer,PartNumber", instruction: "ডাটা চেক করুন।", expected: "সঠিক ডাটা।", warning: "N/A", next: "BIOS Inventory." },
+                    { id: 60, title: "BIOS Inventory", purpose: "(বায়োস সিরিয়াল)", meemo: "ল্যাপটপের সিরিয়াল নাম্বারের সাথে বায়োসের সিরিয়াল মিলে কিনা দেখো।", gui: "N/A", command: "Get-CimInstance Win32_BIOS | Select-Object SerialNumber", instruction: "ল্যাপটপের নিচের স্টিকারের সাথে সিরিয়াল মেলান।", expected: "মিলে গেছে।", warning: "সিরিয়াল আলাদা (মাদারবোর্ড চেঞ্জ হতে পারে)।", next: "Motherboard Inventory." },
+                    { id: 61, title: "Motherboard Inventory", purpose: "(মাদারবোর্ড সিরিয়াল)", meemo: "বোর্ডের সিরিয়াল যাচাই।", gui: "N/A", command: "Get-CimInstance Win32_BaseBoard | Select-Object SerialNumber", instruction: "ডাটা চেক করুন।", expected: "সঠিক সিরিয়াল।", warning: "N/A", next: "RAM Upgrade." }
+                ]
+            },
+            {
+                category: "PART 21 — Upgrade Compatibility",
+                tests: [
+                    { id: 62, title: "RAM Upgrade", purpose: "(র‍্যাম আপগ্রেড সাপোর্ট)", meemo: "ল্যাপটপটি কতো জিবি পর্যন্ত র‍্যাম সাপোর্ট করবে?", gui: "Search exact laptop model specs online", command: "N/A", instruction: "ম্যানুফ্যাকচারারের সাইট চেক করুন।", expected: "আপগ্রেড করার সুযোগ আছে।", warning: "Max RAM Capacity তে পৌঁছে গেছে বা Soldered.", next: "SSD Upgrade." },
+                    { id: 63, title: "SSD Upgrade", purpose: "(স্টোরেজ আপগ্রেড সাপোর্ট)", meemo: "অতিরিক্ত M.2 বা 2.5 স্লট আছে কিনা জেনে নাও।", gui: "Search exact laptop model specs online", command: "N/A", instruction: "স্পেসিফিকেশন চেক করুন।", expected: "অতিরিক্ত স্লট আছে বা পরিবর্তন করা যাবে।", warning: "eMMC স্টোরেজ (যা বদলানো যায় না)।", next: "USB-C Feature Compatibility." },
+                    { id: 64, title: "USB-C Feature Compatibility", purpose: "(এক্সট্রা ফিচার সাপোর্ট)", meemo: "ভবিষ্যতে টাইপ-সি হাব দিয়ে মনিটর চালাতে পারবে কিনা?", gui: "Online Specs", command: "N/A", instruction: "Thunderbolt বা DisplayPort Alternate mode আছে কিনা যাচাই করুন।", expected: "সাপোর্টেড।", warning: "Data only (শুধু ফাইল ট্রান্সফার করা যাবে, ডিসপ্লে আসবে না)।", next: "Wi-Fi/Bluetooth Upgrade." },
+                    { id: 65, title: "Wi-Fi/Bluetooth Upgrade", purpose: "(ওয়াইফাই কার্ড বদলানো)", meemo: "ওয়াইফাই কার্ড সোল্ডার করা নাকি স্লটে বসানো?", gui: "Online Specs/Teardown Video", command: "N/A", instruction: "চেক করুন কার্ড আপগ্রেড করা যায় কিনা।", expected: "M.2 Wi-Fi স্লট আছে।", warning: "সোল্ডার করা।", next: "Box/Serial Verification." }
+                ]
+            },
+            {
+                category: "PART 22 — New Laptop",
+                tests: [
+                    { id: 66, title: "Box/Serial Verification", purpose: "(বক্সের সাথে ল্যাপটপের সিরিয়াল)", meemo: "যদি ল্যাপটপটি বক্সে থাকে, তবে বক্সের সিরিয়াল আর ল্যাপটপের সফটওয়্যার সিরিয়াল মেলাও।", gui: "Settings → System → About", command: "N/A", instruction: "বক্সের স্টিকার এবং About পেজের সিরিয়াল মেলান।", expected: "হুবহু মিলেছে।", warning: "অমিল (ভুল বক্স বা ল্যাপটপ পরিবর্তিত)।", next: "Warranty Verification." },
+                    { id: 67, title: "Warranty Verification", purpose: "(ওয়ারেন্টি চেক)", meemo: "ব্র্যান্ডের ওয়েবসাইটে সিরিয়াল নাম্বার দিয়ে ওয়ারেন্টির মেয়াদ দেখো।", gui: "Brand Official Website Warranty Check", command: "N/A", instruction: "সিরিয়াল ইনপুট দিয়ে মেয়াদ দেখুন।", expected: "ওয়ারেন্টি কার্যকর আছে।", warning: "ওয়ারেন্টি শেষ বা ইনভ্যালিড সিরিয়াল।", next: "Factory Configuration." },
+                    { id: 68, title: "Factory Configuration", purpose: "(অরিজিনাল স্পেকস যাচাই)", meemo: "ফ্যাক্টরি থেকে যে র‍্যাম/এসএসডি দিয়ে আসার কথা সেটাই আছে তো?", gui: "Brand Website", command: "N/A", instruction: "স্পেসিফিকেশন শিট মেলান।", expected: "ফ্যাক্টরি স্পেকস ঠিক আছে।", warning: "অন্য কোম্পানির নিম্নমানের র‍্যাম বা এসএসডি লাগানো হয়েছে।", next: "Repair History." }
+                ]
+            },
+            {
+                category: "PART 23 — Used Laptop",
+                tests: [
+                    { id: 69, title: "Repair History", purpose: "(পূর্বের সার্ভিসিং)", meemo: "বিক্রেতাকে জিজ্ঞেস করো আগে কোনো পার্টস চেঞ্জ বা মাদারবোর্ড রিপেয়ার হয়েছে কিনা।", gui: "Ask Seller", command: "N/A", instruction: "বিক্রেতার দাবি এবং ল্যাপটপের কন্ডিশন মিলিয়ে দেখুন (স্ক্রু খোলা আছে কিনা)।", expected: "কোনো মেজর রিপেয়ার হয়নি বা হলেও তা স্পষ্টভাবে জানানো হয়েছে।", warning: "রিপেয়ারের কথা গোপন করেছে কিন্তু স্ক্রু খোলার দাগ আছে।", next: "Parts Mismatch." },
+                    { id: 70, title: "Parts Mismatch", purpose: "(পার্টস পরিবর্তন)", meemo: "বিক্রেতা যা বলেছে আর তুমি যা পেলে—সব ঠিক আছে তো?", gui: "Seller Claim Verification", command: "N/A", instruction: "তোমার পাওয়া সব ডাটার সাথে বিক্রেতার দাবি মেলান।", expected: "সব তথ্য মিলেছে।", warning: "তথ্য গোপন করা হয়েছে বা স্পেসিফিকেশন বাড়িয়ে বলা হয়েছে।", next: "Finish" }
+                ]
+            }
+        ];
+
+        const allTests = inspectionData.flatMap(cat => cat.tests);
+
+        // ================= UTILS.JS =================
+        function copyToClipboard(text, buttonElement) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => { showCopiedFeedback(buttonElement); }).catch(err => { fallbackCopy(text, buttonElement); });
+            } else { fallbackCopy(text, buttonElement); }
+        }
+
+        function fallbackCopy(text, buttonElement) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed"; textArea.style.left = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus(); textArea.select();
+            try { document.execCommand('copy'); showCopiedFeedback(buttonElement); } 
+            catch (err) { console.error('Fallback copy failed', err); }
+            document.body.removeChild(textArea);
+        }
+
+        function showCopiedFeedback(btn) {
+            const originalText = btn.innerText;
+            btn.innerText = "Copied ✓";
+            btn.style.backgroundColor = "var(--black)"; btn.style.color = "var(--cream)";
+            setTimeout(() => { btn.innerText = originalText; btn.style.backgroundColor = ""; btn.style.color = ""; }, 2000);
+        }
+
+        function getGreeting() {
+            const hour = new Date().getHours();
+            if (hour >= 5 && hour < 12) return "শুভ সকাল!";
+            if (hour >= 12 && hour < 17) return "শুভ দুপুর!";
+            if (hour >= 17 && hour < 20) return "শুভ সন্ধ্যা!";
+            return "শুভ রাত্রি!";
+        }
+
+        // ================= STORAGE.JS =================
+        const STORAGE_KEY = 'laptop_inspection_state';
+
+        function loadState() {
+            const defaultState = { theme: 'light', progress: {}, notes: {} };
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : defaultState;
+        }
+        function saveState(state) { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+        function updateTestStatus(testId, status) { const state = loadState(); state.progress[testId] = status; saveState(state); }
+        function updateTestNote(testId, note) { const state = loadState(); state.notes[testId] = note; saveState(state); }
+        function getTestStatus(testId) { const state = loadState(); return state.progress[testId] || 'pending'; }
+        function getTestNote(testId) { const state = loadState(); return state.notes[testId] || ''; }
+        function toggleThemeStorage() { const state = loadState(); state.theme = state.theme === 'light' ? 'dark' : 'light'; saveState(state); return state.theme; }
+        function resetInspection() { const state = loadState(); state.progress = {}; state.notes = {}; saveState(state); }
+
+        // ================= MEEMO.JS =================
+        const meemoSVG = `
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" id="meemoSvg">
+            <path d="M40,100 L40,40 L90,60 Z" fill="var(--burgundy)" stroke="var(--black)" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M160,100 L160,40 L110,60 Z" fill="var(--burgundy)" stroke="var(--black)" stroke-width="4" stroke-linejoin="round"/>
+            <circle cx="100" cy="110" r="70" fill="var(--cream)" stroke="var(--black)" stroke-width="4"/>
+            <ellipse cx="75" cy="100" rx="8" ry="12" fill="var(--black)" class="meemo-eye" id="eyeL"/>
+            <ellipse cx="125" cy="100" rx="8" ry="12" fill="var(--black)" class="meemo-eye" id="eyeR"/>
+            <polygon points="95,115 105,115 100,122" fill="var(--burgundy)"/>
+            <path d="M90,125 Q100,135 110,125" fill="none" stroke="var(--black)" stroke-width="3" id="meemoMouth"/>
+            <line x1="20" y1="100" x2="40" y2="105" stroke="var(--black)" stroke-width="2"/>
+            <line x1="15" y1="115" x2="40" y2="115" stroke="var(--black)" stroke-width="2"/>
+            <line x1="180" y1="100" x2="160" y2="105" stroke="var(--black)" stroke-width="2"/>
+            <line x1="185" y1="115" x2="160" y2="115" stroke="var(--black)" stroke-width="2"/>
+        </svg>
+        <style>
+            @keyframes blink { 0%, 96%, 98% { transform: scaleY(1); } 97% { transform: scaleY(0.1); } }
+            .meemo-eye { transform-origin: center; animation: blink 4s infinite; }
+            .talking #meemoMouth { d: path("M85,125 Q100,145 115,125"); fill: var(--burgundy); }
+            .warning #eyeL, .warning #eyeR { rx: 10; ry: 10; }
+            .warning #meemoMouth { d: path("M90,130 Q100,120 110,130"); }
+            .happy #meemoMouth { d: path("M80,120 Q100,150 120,120"); }
+        </style>
+        `;
+
+        function renderMeemo() { document.getElementById('meemoContainer').innerHTML = meemoSVG; }
+        
+        function setMeemoState(state, messageText) {
+            const svg = document.getElementById('meemoSvg');
+            const msgBox = document.getElementById('meemoMessage');
+            svg.className = ''; if (state) svg.classList.add(state);
+            msgBox.innerText = messageText;
+        }
+
+        // ================= UI.JS =================
+        let currentTestId = null;
+
+        function initUI() {
+            renderMeemo();
+            document.getElementById('greetingMsg').innerText = getGreeting();
+            const state = loadState();
+            document.documentElement.setAttribute('data-theme', state.theme);
+            renderCategories(); updateProgressUI();
+        }
+
+        function renderCategories(filterText = '', statusFilter = 'all') {
+            const nav = document.getElementById('categoryNav');
+            nav.innerHTML = '';
+            
+            inspectionData.forEach(cat => {
+                const filteredTests = cat.tests.filter(test => {
+                    const matchesText = test.title.toLowerCase().includes(filterText.toLowerCase());
+                    const status = getTestStatus(test.id);
+                    const matchesStatus = statusFilter === 'all' || (statusFilter === 'pending' && status === 'pending') || (statusFilter === 'checked' && status === 'checked') || (statusFilter === 'warning' && (status === 'warning' || status === 'problem'));
+                    return matchesText && matchesStatus;
+                });
+
+                if (filteredTests.length > 0) {
+                    const catDiv = document.createElement('div');
+                    const catBtn = document.createElement('button');
+                    catBtn.className = 'category-btn'; catBtn.innerText = cat.category;
+                    
+                    const ul = document.createElement('ul');
+                    catBtn.onclick = () => { ul.classList.toggle('hidden'); };
+
+                    filteredTests.forEach(test => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.className = `test-item ${currentTestId === test.id ? 'active' : ''}`;
+                        
+                        const status = getTestStatus(test.id);
+                        let statusIcon = '⏳';
+                        if (status === 'checked') statusIcon = '✓';
+                        if (status === 'warning' || status === 'problem') statusIcon = '⚠';
+                        if (status === 'skipped') statusIcon = '—';
+
+                        a.innerText = `${statusIcon} ${test.id}. ${test.title}`;
+                        a.onclick = (e) => { e.preventDefault(); loadTestView(test.id); };
+                        li.appendChild(a); ul.appendChild(li);
+                    });
+                    
+                    catDiv.appendChild(catBtn); catDiv.appendChild(ul); nav.appendChild(catDiv);
+                }
+            });
+        }
+
+        function loadTestView(id) {
+            currentTestId = id;
+            const test = allTests.find(t => t.id === id);
+            const cat = inspectionData.find(c => c.tests.some(t => t.id === id));
+
+            document.getElementById('landingSection').classList.add('hidden');
+            document.getElementById('summarySection').classList.add('hidden');
+            document.getElementById('testViewSection').classList.remove('hidden');
+
+            document.getElementById('breadcrumb').innerHTML = `${cat.category} &rarr; <strong>Test ${test.id}</strong>`;
+            document.getElementById('testTitle').innerText = `${test.id}. ${test.title}`;
+            document.getElementById('testPurpose').innerText = test.purpose;
+            document.getElementById('testGui').innerText = test.gui;
+            
+            const cmdCode = document.getElementById('testCommand');
+            const cmdBtn = document.getElementById('copyCmdBtn');
+            if (test.command && test.command !== "N/A") {
+                cmdCode.innerText = test.command; cmdBtn.style.display = 'inline-block';
+                cmdBtn.onclick = () => copyToClipboard(test.command, cmdBtn);
+            } else {
+                cmdCode.innerText = "No command needed for this test."; cmdBtn.style.display = 'none';
+            }
+
+            document.getElementById('testInstruction').innerText = test.instruction;
+            document.getElementById('testExpected').innerText = test.expected;
+            document.getElementById('testWarning').innerText = test.warning;
+            document.getElementById('testNext').innerText = test.next;
+
+            const notesArea = document.getElementById('testNotes');
+            notesArea.value = getTestNote(test.id);
+            notesArea.oninput = (e) => updateTestNote(test.id, e.target.value);
+
+            const statusBtns = document.querySelectorAll('.status-btn');
+            statusBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.status === getTestStatus(test.id)) btn.classList.add('active');
+                btn.onclick = () => {
+                    updateTestStatus(test.id, btn.dataset.status);
+                    loadTestView(test.id); updateProgressUI();
+                    renderCategories(document.getElementById('searchInput').value, document.getElementById('statusFilter').value);
+                };
+            });
+
+            document.getElementById('prevTestBtn').onclick = () => { if (test.id > 1) loadTestView(test.id - 1); };
+            document.getElementById('nextTestBtn').onclick = () => {
+                if (getTestStatus(test.id) === 'pending') { updateTestStatus(test.id, 'checked'); updateProgressUI(); }
+                if (test.id < allTests.length) loadTestView(test.id + 1); else showSummary();
+            };
+
+            let meemoMood = 'talking';
+            const currentStatus = getTestStatus(test.id);
+            if(currentStatus === 'warning' || currentStatus === 'problem') meemoMood = 'warning';
+            if(currentStatus === 'checked') meemoMood = 'happy';
+            setMeemoState(meemoMood, test.meemo);
+            
+            renderCategories(document.getElementById('searchInput').value, document.getElementById('statusFilter').value);
+        }
+
+        function updateProgressUI() {
+            let completed = 0, warnings = 0;
+            allTests.forEach(t => {
+                const status = getTestStatus(t.id);
+                if (status !== 'pending') completed++;
+                if (status === 'warning' || status === 'problem') warnings++;
+            });
+            const total = allTests.length;
+            const percent = Math.round((completed / total) * 100);
+            
+            document.getElementById('progressFill').style.width = `${percent}%`;
+            document.getElementById('progressText').innerText = `${completed} / ${total} Tests Completed (${percent}%) | ⚠ Warnings: ${warnings}`;
+        }
+
+        function showSummary() {
+            document.getElementById('landingSection').classList.add('hidden');
+            document.getElementById('testViewSection').classList.add('hidden');
+            document.getElementById('summarySection').classList.remove('hidden');
+            setMeemoState('idle', 'এই হলো তোমার পুরো চেকিং এর সামারি! এবার ঠাণ্ডা মাথায় সিদ্ধান্ত নাও।');
+
+            const summaryDiv = document.getElementById('summaryContent');
+            let warningHtml = '<h3 style="color:var(--burgundy);">⚠ Warnings & Problems Found:</h3><ul style="margin-left: 20px;">';
+            let hasWarnings = false;
+
+            allTests.forEach(test => {
+                const status = getTestStatus(test.id);
+                const note = getTestNote(test.id);
+                if (status === 'warning' || status === 'problem') {
+                    hasWarnings = true;
+                    warningHtml += `<li style="margin-bottom: 10px;"><strong>Test ${test.id} (${test.title}):</strong> <span style="color:var(--burgundy); font-weight:bold;">${status.toUpperCase()}</span>. ${note ? '<br><i>Note: '+note+'</i>' : ''}</li>`;
+                }
+            });
+            warningHtml += '</ul>';
+            if (!hasWarnings) warningHtml = '<p style="font-weight:bold;">No major warnings recorded! Everything looks good based on your tests.</p>';
+            summaryDiv.innerHTML = warningHtml;
+        }
+
+        // ================= APP.JS (Initialization) =================
+        document.addEventListener('DOMContentLoaded', () => {
+            initUI();
+
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                const newTheme = toggleThemeStorage();
+                document.documentElement.setAttribute('data-theme', newTheme);
+            });
+
+            document.getElementById('resetBtn').addEventListener('click', () => {
+                if(confirm("সব inspection status এবং notes মুছে ফেলতে চান? এটি আর ফেরত পাওয়া যাবে না।")) {
+                    resetInspection(); location.reload();
+                }
+            });
+
+            document.getElementById('printBtn').addEventListener('click', () => { window.print(); });
+            document.getElementById('startTestBtn').addEventListener('click', () => { loadTestView(1); });
+            
+            document.getElementById('quickModeBtn').addEventListener('click', () => {
+                setMeemoState('talking', 'Quick Mode: আমরা শুধু সবচেয়ে জরুরি ৫-১০টি বিষয় চেক করব। (Category navigation ব্যবহার করুন)');
+                loadTestView(1);
+            });
+
+            document.getElementById('summaryBtn').addEventListener('click', () => { showSummary(); });
+            
+            document.getElementById('backToTestsBtn').addEventListener('click', () => {
+                if(currentTestId) loadTestView(currentTestId); else loadTestView(1);
+            });
+
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                renderCategories(e.target.value, document.getElementById('statusFilter').value);
+            });
+
+            document.getElementById('statusFilter').addEventListener('change', (e) => {
+                renderCategories(document.getElementById('searchInput').value, e.target.value);
+            });
+        });
+    </script>
 </body>
 </html>
