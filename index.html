@@ -1,51 +1,135 @@
-<!doctype html>
-<html lang="bn">
+<!DOCTYPE html>
+<html lang="bn" data-theme="light">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#5A0719">
-  <title>Used Laptop Buying Guidelines | Windows 10/11 Inspection Guide</title>
-  <meta name="description" content="A complete interactive Windows 10/11 used laptop inspection checklist covering CPU, RAM, SSD, battery, display, keyboard, ports, BIOS, Windows health, thermal behavior and more.">
-  <meta property="og:title" content="Used Laptop Buying Guidelines">
-  <meta property="og:description" content="Interactive Windows 10/11 laptop inspection assistant with Meemo.">
-  <meta property="og:type" content="website">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Used Laptop Buying Guidelines | Windows 10/11 Inspection Guide</title>
+    <meta name="description" content="A complete interactive Windows 10/11 used laptop inspection checklist covering CPU, RAM, SSD, battery, display, keyboard, ports, BIOS, Windows health, thermal behavior and more.">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="#home" data-route="home" aria-label="Used Laptop Buying Guidelines home">
-      <span class="brand-mark">M</span><span>Used Laptop Buying Guidelines</span>
-    </a>
-    <nav class="desktop-nav" aria-label="Primary navigation">
-      <a href="#home">Home</a><a href="#dashboard">Dashboard</a><a href="#quick">Quick Inspection</a>
-      <a href="#tests">All Tests</a><a href="#commands">Commands</a><a href="#powershell">PowerShell</a>
-      <a href="#seller">Seller Verification</a><a href="#current">My Laptop</a><a href="#summary">Final Summary</a>
-    </nav>
-    <div class="header-actions">
-      <button id="themeBtn" class="icon-btn" type="button" aria-label="Change theme" title="Theme">◐</button>
-      <button id="menuBtn" class="icon-btn mobile-only" type="button" aria-label="Open menu">☰</button>
+    <header class="main-header">
+        <div class="logo">Used Laptop Buying Guidelines</div>
+        <div class="header-controls">
+            <button id="themeToggle" class="btn-outline">Toggle Theme</button>
+            <button id="resetBtn" class="btn-outline warning-btn">Reset Inspection</button>
+            <button id="printBtn" class="btn-outline">Export Report</button>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="progress-container">
+                <h3>Progress</h3>
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <p id="progressText">0 / 70 Tests Completed (0%)</p>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search tests (e.g. Battery)...">
+            </div>
+            <div class="nav-filters">
+                <select id="statusFilter">
+                    <option value="all">All Tests</option>
+                    <option value="pending">Not Checked</option>
+                    <option value="checked">Checked</option>
+                    <option value="warning">Warning / Problem</option>
+                </select>
+            </div>
+            <nav id="categoryNav" class="category-nav"></nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="mainContent">
+            <!-- Landing / Greeting -->
+            <section id="landingSection" class="section-card active">
+                <h1 id="greetingMsg">শুভ সকাল!</h1>
+                <h2>Used Laptop কেনার আগে — দেখুন, পরীক্ষা করুন, তারপর সিদ্ধান্ত নিন।</h2>
+                <div class="safety-notice">
+                    <strong>সতর্কতা:</strong> কোনো command চালানোর আগে নির্দেশনা পড়ুন। Information-gathering command-কে অগ্রাধিকার দিন। 
+                </div>
+                <button id="startTestBtn" class="btn-primary start-btn">START TEST MY LAPTOP!</button>
+                <div class="mode-buttons">
+                    <button id="quickModeBtn" class="btn-outline">30-Min Quick Inspection</button>
+                    <button id="summaryBtn" class="btn-outline">View Final Summary</button>
+                </div>
+            </section>
+
+            <!-- Test View Area (Dynamically Populated) -->
+            <section id="testViewSection" class="section-card hidden">
+                <div class="breadcrumb" id="breadcrumb">Category &rarr; Test</div>
+                <h2 id="testTitle">Test Title</h2>
+                <p class="test-purpose" id="testPurpose">(Purpose)</p>
+
+                <div class="methods-container">
+                    <div class="method-box">
+                        <h3>GUI Method</h3>
+                        <p id="testGui">N/A</p>
+                    </div>
+                    <div class="method-box">
+                        <h3>Command Method</h3>
+                        <div class="code-container">
+                            <code id="testCommand">N/A</code>
+                            <button id="copyCmdBtn" class="btn-outline btn-small">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interpretation-box">
+                    <h3>What to look for:</h3>
+                    <p id="testInstruction">Instruction</p>
+                    <p class="status-expected"><strong>✓ স্বাভাবিক:</strong> <span id="testExpected"></span></p>
+                    <p class="status-warning"><strong>⚠ সতর্ক/সমস্যা:</strong> <span id="testWarning"></span></p>
+                    <p><strong>Next Step:</strong> <span id="testNext"></span></p>
+                </div>
+
+                <div class="notes-section">
+                    <label for="testNotes">My Notes (Optional):</label>
+                    <textarea id="testNotes" rows="2" placeholder="Write observation here..."></textarea>
+                </div>
+
+                <div class="status-controls">
+                    <button class="status-btn" data-status="checked">✓ Checked</button>
+                    <button class="status-btn" data-status="warning">⚠ Warning</button>
+                    <button class="status-btn" data-status="problem">! Problem</button>
+                    <button class="status-btn" data-status="more_inspection">? Need More Inspection</button>
+                    <button class="status-btn" data-status="skipped">— Skipped</button>
+                </div>
+
+                <div class="nav-controls">
+                    <button id="prevTestBtn" class="btn-outline">&larr; Previous</button>
+                    <button id="nextTestBtn" class="btn-primary">Mark & Continue &rarr;</button>
+                </div>
+            </section>
+
+            <!-- Final Summary Section -->
+            <section id="summarySection" class="section-card hidden">
+                <h2>Final Inspection Summary</h2>
+                <p>কোনো গুরুত্বপূর্ণ test অসম্পূর্ণ থাকলে সেটি আগে সম্পন্ন করুন। তারপর সংগৃহীত তথ্যের ভিত্তিতে নিজের সিদ্ধান্ত নিন।</p>
+                <div id="summaryContent"></div>
+                <button id="backToTestsBtn" class="btn-primary mt-20">Back to Tests</button>
+            </section>
+        </main>
+
+        <!-- Meemo Assistant Panel -->
+        <aside class="meemo-panel">
+            <div class="meemo-svg-container" id="meemoContainer">
+                <!-- Meemo SVG injected via JS to keep HTML clean -->
+            </div>
+            <div class="meemo-message-box">
+                <p id="meemoMessage">আমি Meemo — তোমার Laptop Checking Buddy! আমি তোমাকে গাইড করব।</p>
+            </div>
+        </aside>
     </div>
-  </header>
 
-  <div id="mobileNav" class="mobile-nav" hidden>
-    <a href="#home">Home</a><a href="#dashboard">Dashboard</a><a href="#quick">Quick Inspection</a>
-    <a href="#tests">All Tests</a><a href="#commands">Master Commands</a><a href="#powershell">PowerShell</a>
-    <a href="#seller">Seller Verification</a><a href="#current">My Laptop</a><a href="#summary">Final Summary</a>
-    <a href="#safety">Safety</a><a href="#about">About Meemo</a>
-  </div>
-
-  <main id="app" tabindex="-1" aria-live="polite"></main>
-
-  <footer class="site-footer">
-    <div><strong>Used Laptop Buying Guidelines</strong>
-      <p>দেখুন → পরীক্ষা করুন → তথ্য মিলিয়ে দেখুন → বুঝুন → তারপর নিজের সিদ্ধান্ত নিন।</p>
-    </div>
-    <div><a href="#safety">Safety</a><a href="#about">About Meemo</a></div>
-  </footer>
-
-  <script src="js/app.js"></script>
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/meemo.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
