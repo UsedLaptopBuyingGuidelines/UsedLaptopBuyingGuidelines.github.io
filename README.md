@@ -530,4 +530,3 @@ Used Laptop Buying Guidelines
 A practical approach to smarter used-laptop buying.
 
 </div>
-```
