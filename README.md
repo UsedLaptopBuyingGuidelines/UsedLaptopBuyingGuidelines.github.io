@@ -30,7 +30,7 @@ A lightweight, responsive web application designed to be useful even when you're
 
 Buying a used laptop is not simply about checking:
 
-```text
+
 CPU + RAM + SSD + Price
 
 A laptop can look perfect while hiding problems such as:
