@@ -69,6 +69,29 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 }
 
 
+/* Mobile header alignment fix */
+@media (max-width: 600px) {
+  .header-inner,
+  .nav-inner,
+  .navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .header-actions,
+  .nav-actions,
+  .header-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+}
+
 
 /* ===== Final UX / desktop hardening ===== */
 :root{
